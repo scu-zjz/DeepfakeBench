@@ -1,0 +1,14 @@
+simplejson
+efficientnet_pytorch
+kornia
+imageio
+loralib
+einops
+scikit-image
+albumentations==1.3.0
+dlib
+imgaug
+lmdb
+tensorboard
+scikit-learn
+numpy<2

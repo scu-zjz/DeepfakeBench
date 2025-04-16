@@ -5,3 +5,8 @@
 *.pth
 *.pt
 *.dat
+rgb/*
+datasets/*
+*/datasets/*
+*.zip
+*/logs/*
