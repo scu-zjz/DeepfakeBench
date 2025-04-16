@@ -157,7 +157,6 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
         
         # Record video name for video-level metrics
         video_name_list = []
-        
         # Try to get the dataset information from the JSON file
         if not os.path.exists(self.config['dataset_json_folder']):
             self.config['dataset_json_folder'] = self.config['dataset_json_folder'].replace('/Youtu_Pangu_Security_Public', '/Youtu_Pangu_Security/public')
@@ -171,10 +170,12 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
         # If JSON file exists, do the following data collection
         # FIXME: ugly, need to be modified here.
         cp = None
+        
+        # 这里是有差异处理的地方。 他们应该是直接把c40和c23按照c来区分 在同一个json里面 指定不同的文件夹
         if dataset_name == 'FaceForensics++_c40':
-            dataset_name = 'FaceForensics++'
+        #     dataset_name = 'FaceForensics++'
             cp = 'c40'
-        elif dataset_name == 'FF-DF_c40':
+        if dataset_name == 'FF-DF_c40':
             dataset_name = 'FF-DF'
             cp = 'c40'
         elif dataset_name == 'FF-F2F_c40':
@@ -190,9 +191,10 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
         for label in dataset_info[dataset_name]:
             sub_dataset_info = dataset_info[dataset_name][label][self.mode]
             # Special case for FaceForensics++ and DeepFakeDetection, choose the compression type
-            if cp == None and dataset_name in ['FF-DF', 'FF-F2F', 'FF-FS', 'FF-NT', 'FaceForensics++','DeepFakeDetection','FaceShifter']:
+            if cp == None and dataset_name in ['FF-DF', 'FF-F2F', 'FF-FS', 'FF-NT', 'FaceForensics++','DeepFakeDetection','FaceShifter', 'FaceForensics++_c40']:
+                
                 sub_dataset_info = sub_dataset_info[self.compression]
-            elif cp == 'c40' and dataset_name in ['FF-DF', 'FF-F2F', 'FF-FS', 'FF-NT', 'FaceForensics++','DeepFakeDetection','FaceShifter']:
+            elif cp == 'c40' and dataset_name in ['FF-DF', 'FF-F2F', 'FF-FS', 'FF-NT', 'FaceForensics++','DeepFakeDetection','FaceShifter', 'FaceForensics++_c40']:
                 sub_dataset_info = sub_dataset_info['c40']
 
             # Iterate over the videos in the dataset
