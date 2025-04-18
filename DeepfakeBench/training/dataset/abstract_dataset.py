@@ -298,7 +298,7 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
         size = self.config['resolution'] # if self.mode == "train" else self.config['resolution']
         if not self.lmdb:
             if not file_path[0] == '.':
-                file_path =  f'./{self.config["rgb_dir"]}/'+file_path
+                file_path =  f'{self.config["rgb_dir"]}/'+file_path
             assert os.path.exists(file_path), f"{file_path} does not exist"
             img = cv2.imread(file_path)
             if img is None:
@@ -308,7 +308,6 @@ class DeepfakeAbstractBaseDataset(data.Dataset):
                 # transfer the path format from rgb-path to lmdb-key
                 if file_path[0]=='.':
                     file_path=file_path.replace('./datasets/','')
-
                 image_bin = txn.get(file_path.encode())
                 image_buf = np.frombuffer(image_bin, dtype=np.uint8)
                 img = cv2.imdecode(image_buf, cv2.IMREAD_COLOR)
